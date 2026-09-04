@@ -32,8 +32,8 @@ jobs:
 
     - name: Check resource group configuration
       run: |
-        if ! grep -q 'resource "azurerm_resource_group"' main.tf; then
-          echo "Resource group configuration not found in main.tf!"
+        if ! grep -q 'resource "azurerm_resource_group"' modules/resource_group/main.tf; then
+          echo "Resource group configuration not found in modules/resource_group/main.tf!"
           exit 1
         fi
         echo "Resource group configuration is present."
