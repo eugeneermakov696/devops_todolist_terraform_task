@@ -25,7 +25,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 
   admin_ssh_key {
     username   = var.admin_username
-    public_key = file(var.ssh_key_path)
+    public_key = var.ssh_key_public
   }
 
   os_disk {
@@ -39,18 +39,6 @@ resource "azurerm_linux_virtual_machine" "main" {
     sku       = "22_04-lts"
     version   = "latest"
   }
-
-  provisioner "file" {
-    source      = "${path.root}/install-app.sh"
-    destination = "/home/${azurerm_linux_virtual_machine.main.admin_username}/install-app.sh"
-
-    connection {
-      type        = "ssh"
-      user        = var.admin_username
-      private_key = file("${path.root}/ssh/azure_vm_ssh")
-      host        = var.public_ip_address
-    }
-  }
 }
 
 resource "azurerm_virtual_machine_extension" "example" {
@@ -61,9 +49,12 @@ resource "azurerm_virtual_machine_extension" "example" {
   type_handler_version = "2.0"
 
   settings = <<SETTINGS
- {
-  "commandToExecute": "chmod +x /home/${azurerm_linux_virtual_machine.main.admin_username}/install-app.sh && /home/${azurerm_linux_virtual_machine.main.admin_username}/install-app.sh"
- }
+{
+  "fileUris": [
+    "https://raw.githubusercontent.com/eugeneermakov696/devops_todolist_terraform_task/main/install-app.sh"
+  ],
+  "commandToExecute": "chmod +x install-app.sh && ./install-app.sh"
+}
 SETTINGS
 
 }

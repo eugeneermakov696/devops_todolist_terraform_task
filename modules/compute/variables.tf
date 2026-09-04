@@ -18,7 +18,7 @@ variable "admin_username" {
   type = string
 }
 
-variable "ssh_key_path" {
+variable "ssh_key_public" {
   type = string
 }
 
