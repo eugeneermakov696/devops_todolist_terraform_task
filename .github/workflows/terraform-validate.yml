@@ -72,7 +72,7 @@ jobs:
 
     - name: Check subnet configuration
       run: |
-        if ! grep -q 'resource "azurerm_subnet"' modules/network/main.tf; then
+        if ! grep -q 'subnet {' modules/network/main.tf; then
           echo "Subnet configuration not found in modules/network/main.tf!"
           exit 1
         fi
