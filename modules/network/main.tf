@@ -28,7 +28,7 @@ resource "azurerm_network_security_group" "main" {
     destination_address_prefix = "*"
   }
 
-   security_rule {
+  security_rule {
     name                       = "allow-app"
     priority                   = 110
     direction                  = "Inbound"
