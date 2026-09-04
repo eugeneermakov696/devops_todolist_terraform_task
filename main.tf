@@ -25,7 +25,7 @@ module "compute" {
   resource_group_name  = module.resource_group.resource_group_name
   subnet_id            = module.network.subnet_id
   admin_username       = "eugeneadmin"
-  ssh_key_path         = "${path.root}/ssh/azure_vm_ssh.pub"
+  ssh_key_public       = file("${path.root}/ssh/azure_vm_ssh.pub")
   public_ip_address    = module.network.public_ip_address
   public_ip_address_id = module.network.public_ip_address_id
 }
